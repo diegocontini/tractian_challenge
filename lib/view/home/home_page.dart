@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: ColorCustom.darkBlue,
       ),
-      body: Column(
+      body: const Column(
         children: [
           Center(child: UnitButtonWidget(unit: EnumUnit.jaguar)),
           Center(child: UnitButtonWidget(unit: EnumUnit.tobias)),

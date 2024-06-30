@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:tractian_challenge/view/assets/asset_list_controller.dart';

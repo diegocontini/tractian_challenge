@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 23, 25, 45)),
+        dividerColor: Colors.transparent,
         useMaterial3: true,
       ),
       home: const HomePage(),

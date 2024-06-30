@@ -6,6 +6,7 @@ class Location {
   List<Location> children = [];
   List<Asset> assets = [];
   String id;
+  bool show = true;
   Location({
     required this.name,
     this.parentId,

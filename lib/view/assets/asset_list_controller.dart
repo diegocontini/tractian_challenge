@@ -91,6 +91,7 @@ class AssetListController extends ChangeNotifier {
     } else {
       filteredLocations = [];
       filteredUnlikedAssets = [];
+      notifyListeners();
       _searchLocation(src: src, locations: locations);
 
       _filterUnlinkedAssets(src: src, assets: unlinkedAssets);
@@ -106,16 +107,26 @@ class AssetListController extends ChangeNotifier {
         if (loc.assets.isNotEmpty) {
           if (_searchAssetOrComponent(src: src, assets: loc.assets)) {
             if (!filteredLocations.contains(loc)) {
-              filteredLocations.add(loc);
+              if (loc.parentId == null) {
+                filteredLocations.add(loc);
+              }
+              loc.show = true;
+              return true;
             }
+          } else {
+            loc.show = false;
           }
         }
         if (loc.children.isNotEmpty) {
-          findedLocation = _searchLocation(src: src, locations: loc.children);
           if (_searchLocation(src: src, locations: loc.children)) {
             if (!filteredLocations.contains(loc)) {
-              filteredLocations.add(loc);
+              if (loc.parentId == null) {
+                filteredLocations.add(loc);
+              }
+              loc.show = true;
             }
+          } else {
+            loc.show = false;
           }
         }
         if (loc.name.toLowerCase().contains(src.toLowerCase())) {
@@ -146,22 +157,29 @@ class AssetListController extends ChangeNotifier {
         }
         if (stateFilter == EnumAssetFilterState.sensor) {
           if (asset.sensorType == 'energy') {
-            asset.remove = false;
             return true;
+          }
+          if (!finded) {
+            asset.show = false;
           }
         }
         if (stateFilter == EnumAssetFilterState.status) {
           if (asset.status == 'alert') {
-            asset.remove = false;
             return true;
+          }
+          if (!finded) {
+            asset.show = false;
           }
         }
         if (asset.name.toLowerCase().contains(src.toLowerCase())) {
-          asset.remove = false;
           return true;
+        }
+        if (!finded) {
+          asset.show = false;
         }
       }
     }
+
     return finded;
   }
 }

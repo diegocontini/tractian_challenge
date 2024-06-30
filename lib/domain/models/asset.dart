@@ -8,7 +8,7 @@ class Asset {
   String? locationId;
   String? sensorType;
   String? status;
-  bool remove = false;
+  bool show = true;
   List<Asset> children = [];
   Asset({
     required this.name,

@@ -62,7 +62,7 @@ class _AssetListPageState extends State<AssetListPage> {
                 child: ListView(
                   children: [
                     ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: _controller.filteredLocations.length,
                       itemBuilder: (context, index) {
@@ -70,7 +70,7 @@ class _AssetListPageState extends State<AssetListPage> {
                       },
                     ),
                     ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: _controller.filteredUnlikedAssets.length,
                       itemBuilder: (context, index) {
