@@ -1,7 +1,10 @@
+import 'package:tractian_challenge/domain/models/asset.dart';
+
 class Location {
   String name;
   String? parentId;
   List<Location> children = [];
+  List<Asset> assets = [];
   String id;
   Location({
     required this.name,

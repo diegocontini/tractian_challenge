@@ -3,10 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:tractian_challenge/domain/models/asset.dart';
 import 'package:tractian_challenge/domain/models/constants/enum_unit.dart';
-import 'package:tractian_challenge/domain/models/location.dart';
-import 'package:tractian_challenge/domain/repository/location_repository.dart';
+import 'package:tractian_challenge/domain/repository/asset_repository.dart';
 
-class LocationLocalRepository {
+class AssetLocalRepository implements AssetRepository {
   @override
   Future<({List<Asset> unlinked, List<Asset> linked})> getAll(EnumUnit unit) async {
     ({List<Asset> unlinked, List<Asset> linked}) record = (unlinked: [], linked: []);
@@ -32,15 +31,15 @@ class LocationLocalRepository {
       ({List<Asset> unlinked, List<Asset> linked}) record = (unlinked: [], linked: []);
       for (var i in json) {
         var tempObj = Asset.fromMap(i);
-        if (tempObj.locationId == null && tempObj.parentId == null) {
+        if (tempObj.isUnlinked) {
           record.unlinked.add(tempObj);
         } else {
           record.linked.add(tempObj);
         }
       }
-      for (var location in record.linked) {
-        var temp = record.linked.where((e) => e.parentId == location.id).toList();
-        location.children = temp;
+      for (var asset in record.linked) {
+        var temp = record.linked.where((e) => e.parentId == asset.id).toList();
+        asset.children = temp;
       }
       record.linked.removeWhere((e) => e.parentId != null);
       return record;

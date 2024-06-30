@@ -8,6 +8,7 @@ class Asset {
   String? locationId;
   String? sensorType;
   String? status;
+  bool remove = false;
   List<Asset> children = [];
   Asset({
     required this.name,
@@ -38,5 +39,13 @@ class Asset {
       sensorType: map['sensorType'] != null ? map['sensorType'] as String : null,
       status: map['status'] != null ? map['status'] as String : null,
     );
+  }
+
+  bool get isUnlinked {
+    return locationId == null && parentId == null && sensorType != null;
+  }
+
+  bool get isComponent {
+    return sensorType != null;
   }
 }

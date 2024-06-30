@@ -28,7 +28,7 @@
     "id": "656a07cdc50ec9001e84167b",
     "locationId": null,
     "parentId": "656a07c3f2d4a1001e2144c5",
-    "sensorType": "vibration",
+    "sensorType": "energy",
     "status": "operating"
   },
   {
