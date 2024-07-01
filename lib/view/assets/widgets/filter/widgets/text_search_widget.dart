@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:tractian_challenge/view/assets/asset_list_controller.dart';
 
@@ -12,8 +14,9 @@ class TextSearchWidget extends StatelessWidget {
       controller: controller,
       onTap: () {
         controller.clear();
-        _controller.onClickTextField;
+        _controller.onClickTextField();
       },
+      onTapAlwaysCalled: true,
       onFieldSubmitted: (value) {
         _controller.search(value.toString());
       },
