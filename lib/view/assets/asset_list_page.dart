@@ -51,36 +51,38 @@ class _AssetListPageState extends State<AssetListPage> {
       body: ListenableBuilder(
         listenable: _controller,
         builder: (context, child) {
-          return Column(
-            children: [
-              FilterWidget(controller: _controller),
-              const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                height: SizeHelper.altura(context) * 0.7,
-                child: ListView(
-                  children: [
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _controller.filteredLocations.length,
-                      itemBuilder: (context, index) {
-                        return LocationWidget(location: _controller.filteredLocations[index]);
-                      },
-                    ),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: _controller.filteredUnlikedAssets.length,
-                      itemBuilder: (context, index) {
-                        return AssetWidget(asset: _controller.filteredUnlikedAssets[index]);
-                      },
-                    ),
-                  ],
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                FilterWidget(controller: _controller),
+                const SizedBox(
+                  height: 16,
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: SizeHelper.altura(context) * 0.7,
+                  child: ListView(
+                    children: [
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _controller.filteredLocations.length,
+                        itemBuilder: (context, index) {
+                          return LocationWidget(location: _controller.filteredLocations[index]);
+                        },
+                      ),
+                      ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: _controller.filteredUnlikedAssets.length,
+                        itemBuilder: (context, index) {
+                          return AssetWidget(asset: _controller.filteredUnlikedAssets[index]);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),

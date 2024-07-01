@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:tractian_challenge/view/assets/asset_list_controller.dart';
 
@@ -9,6 +8,7 @@ class TextSearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: _controller.onClickTextField,
       onFieldSubmitted: (value) {
         _controller.search(value.toString());
       },

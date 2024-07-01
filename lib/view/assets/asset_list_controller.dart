@@ -64,6 +64,14 @@ class AssetListController extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onClickTextField() {
+    stateFilter = EnumAssetFilterState.none;
+    if (actualUnit != null) {
+      fetchInitialData(actualUnit!);
+    }
+    notifyListeners();
+  }
+
   Future<void> fetchInitialData(EnumUnit unit) async {
     actualUnit = unit;
     locations = await _locationRepository.getAll(unit);
