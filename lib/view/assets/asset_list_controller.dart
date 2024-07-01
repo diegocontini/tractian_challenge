@@ -113,7 +113,9 @@ class AssetListController extends ChangeNotifier {
     if (locations.isNotEmpty) {
       for (var loc in locations) {
         if (loc.assets.isNotEmpty) {
-          if (_searchAssetOrComponent(src: src, assets: loc.assets)) {
+          var boolList = _searchAssetOrComponent(src: src, assets: loc.assets, founded: false);
+
+          if (boolList) {
             if (!filteredLocations.contains(loc)) {
               if (loc.parentId == null) {
                 filteredLocations.add(loc);
@@ -150,45 +152,47 @@ class AssetListController extends ChangeNotifier {
   void _filterUnlinkedAssets({required String src, required List<Asset> assets}) {
     if (assets.isNotEmpty) {
       for (var asset in assets) {
-        if (_searchAssetOrComponent(src: src, assets: assets)) {
+        if (_searchAssetOrComponent(src: src, assets: assets, founded: false)) {
           filteredUnlikedAssets.add(asset);
         }
       }
     }
   }
 
-  bool _searchAssetOrComponent({required String src, required List<Asset> assets}) {
-    bool finded = false;
+  bool _searchAssetOrComponent({required String src, required List<Asset> assets, required bool founded}) {
+    if (!founded) {
+      founded = false;
+    }
+
     if (assets.isNotEmpty) {
       for (var asset in assets) {
         if (asset.children.isNotEmpty) {
-          finded = _searchAssetOrComponent(src: src, assets: asset.children);
+          founded = (_searchAssetOrComponent(src: src, assets: asset.children, founded: founded));
         }
         if (stateFilter == EnumAssetFilterState.sensor) {
           if (asset.sensorType == 'energy') {
-            finded = true;
-          }
-          if (!finded) {
+            founded = true;
+          } else {
             asset.show = false;
           }
         }
         if (stateFilter == EnumAssetFilterState.status) {
           if (asset.status == 'alert') {
-            finded = true;
-          }
-          if (!finded) {
+            founded = true;
+          } else {
             asset.show = false;
           }
         }
-        if (asset.name.toLowerCase().contains(src.toLowerCase())) {
-          finded = true;
-        }
-        if (!finded) {
-          asset.show = false;
+        if (stateFilter == EnumAssetFilterState.none) {
+          if (asset.name.toLowerCase().contains(src.toLowerCase())) {
+            founded = true;
+          } else {
+            asset.show = false;
+          }
         }
       }
     }
-
-    return finded;
+    //founded.add(finded);
+    return founded;
   }
 }

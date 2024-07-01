@@ -2,15 +2,12 @@
 
 A new Flutter project.
 
-## Getting Started
+## TO-DO
 
-This project is a starting point for a Flutter application.
+Bugs e melhorias a serem feitas.
 
-A few resources to get you started if this is your first Flutter project:
+- Necessário remover locations que não pussem nenhum filho que atende os critérios de filtro. É um bug que ocorre ao chegar muito fundo na árvore. 
+- Indicativo de loading
+- Splash screen
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
