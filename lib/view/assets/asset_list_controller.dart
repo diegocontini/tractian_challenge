@@ -100,20 +100,18 @@ class AssetListController extends ChangeNotifier {
       filteredLocations = [];
       filteredUnlikedAssets = [];
       notifyListeners();
-      _searchLocation(src: src, locations: locations);
+      _searchLocation(src: src, locations: locations, findedLocation: false);
 
       _filterUnlinkedAssets(src: src, assets: unlinkedAssets);
     }
     notifyListeners();
   }
 
-  bool _searchLocation({required String src, required List<Location> locations}) {
-    bool findedLocation = false;
-
+  bool _searchLocation({required String src, required List<Location> locations, required bool findedLocation}) {
     if (locations.isNotEmpty) {
       for (var loc in locations) {
         if (loc.assets.isNotEmpty) {
-          var boolList = _searchAssetOrComponent(src: src, assets: loc.assets, founded: false);
+          var boolList = _searchAssetOrComponent(src: src, assets: loc.assets, finded: false);
 
           if (boolList) {
             if (!filteredLocations.contains(loc)) {
@@ -128,7 +126,7 @@ class AssetListController extends ChangeNotifier {
           }
         }
         if (loc.children.isNotEmpty) {
-          if (_searchLocation(src: src, locations: loc.children)) {
+          if (_searchLocation(src: src, locations: loc.children, findedLocation: false)) {
             if (!filteredLocations.contains(loc)) {
               if (loc.parentId == null) {
                 filteredLocations.add(loc);
@@ -144,6 +142,9 @@ class AssetListController extends ChangeNotifier {
           log(loc.name);
           findedLocation = true;
         }
+        if (!findedLocation) {
+          loc.show = false;
+        }
       }
     }
     return findedLocation;
@@ -152,47 +153,46 @@ class AssetListController extends ChangeNotifier {
   void _filterUnlinkedAssets({required String src, required List<Asset> assets}) {
     if (assets.isNotEmpty) {
       for (var asset in assets) {
-        if (_searchAssetOrComponent(src: src, assets: assets, founded: false)) {
+        if (_searchAssetOrComponent(src: src, assets: assets, finded: false)) {
           filteredUnlikedAssets.add(asset);
         }
       }
     }
   }
 
-  bool _searchAssetOrComponent({required String src, required List<Asset> assets, required bool founded}) {
-    if (!founded) {
-      founded = false;
-    }
-
+  bool _searchAssetOrComponent({required String src, required List<Asset> assets, required bool finded}) {
     if (assets.isNotEmpty) {
       for (var asset in assets) {
         if (asset.children.isNotEmpty) {
-          founded = (_searchAssetOrComponent(src: src, assets: asset.children, founded: founded));
+          finded = (_searchAssetOrComponent(src: src, assets: asset.children, finded: finded));
         }
-        if (stateFilter == EnumAssetFilterState.sensor) {
-          if (asset.sensorType == 'energy') {
-            founded = true;
-          } else {
-            asset.show = false;
+
+        if (!finded || (asset.parentId == null && asset.children.isEmpty)) {
+          if (stateFilter == EnumAssetFilterState.sensor) {
+            if (asset.sensorType == 'energy') {
+              finded = true;
+            } else {
+              asset.show = false;
+            }
           }
-        }
-        if (stateFilter == EnumAssetFilterState.status) {
-          if (asset.status == 'alert') {
-            founded = true;
-          } else {
-            asset.show = false;
+          if (stateFilter == EnumAssetFilterState.status) {
+            if (asset.status == 'alert') {
+              finded = true;
+            } else {
+              asset.show = false;
+            }
           }
-        }
-        if (stateFilter == EnumAssetFilterState.none) {
-          if (asset.name.toLowerCase().contains(src.toLowerCase())) {
-            founded = true;
-          } else {
-            asset.show = false;
+          if (stateFilter == EnumAssetFilterState.none) {
+            if (asset.name.toLowerCase().contains(src.toLowerCase())) {
+              finded = true;
+            } else {
+              asset.show = false;
+            }
           }
         }
       }
     }
     //founded.add(finded);
-    return founded;
+    return finded;
   }
 }
