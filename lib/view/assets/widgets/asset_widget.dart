@@ -9,7 +9,7 @@ class AssetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      //visible: asset.show,
+      visible: asset.show,
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: asset.isComponent ? Colors.transparent : null),
         child: ExpansionTile(

@@ -10,7 +10,7 @@ class LocationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      //visible: location.show,
+      visible: location.show,
       child: ExpansionTile(
         title: Row(
           children: [

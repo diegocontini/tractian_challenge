@@ -7,8 +7,13 @@ class TextSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
     return TextFormField(
-      onTap: _controller.onClickTextField,
+      controller: controller,
+      onTap: () {
+        controller.clear();
+        _controller.onClickTextField;
+      },
       onFieldSubmitted: (value) {
         _controller.search(value.toString());
       },

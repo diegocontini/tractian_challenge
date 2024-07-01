@@ -119,7 +119,7 @@ class AssetListController extends ChangeNotifier {
                 filteredLocations.add(loc);
               }
               loc.show = true;
-              return true;
+              findedLocation = true;
             }
           } else {
             loc.show = false;
@@ -132,6 +132,7 @@ class AssetListController extends ChangeNotifier {
                 filteredLocations.add(loc);
               }
               loc.show = true;
+              findedLocation = true;
             }
           } else {
             loc.show = false;
@@ -139,7 +140,7 @@ class AssetListController extends ChangeNotifier {
         }
         if (loc.name.toLowerCase().contains(src.toLowerCase())) {
           log(loc.name);
-          return true;
+          findedLocation = true;
         }
       }
     }
@@ -165,7 +166,7 @@ class AssetListController extends ChangeNotifier {
         }
         if (stateFilter == EnumAssetFilterState.sensor) {
           if (asset.sensorType == 'energy') {
-            return true;
+            finded = true;
           }
           if (!finded) {
             asset.show = false;
@@ -173,14 +174,14 @@ class AssetListController extends ChangeNotifier {
         }
         if (stateFilter == EnumAssetFilterState.status) {
           if (asset.status == 'alert') {
-            return true;
+            finded = true;
           }
           if (!finded) {
             asset.show = false;
           }
         }
         if (asset.name.toLowerCase().contains(src.toLowerCase())) {
-          return true;
+          finded = true;
         }
         if (!finded) {
           asset.show = false;
